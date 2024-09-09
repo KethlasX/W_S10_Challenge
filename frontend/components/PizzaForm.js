@@ -11,12 +11,19 @@ const initialFormState = { // suggested
   '5': false,
 }
 
+// reducer to handle the changes to initialState
+// switch case for fullName, size, and topping (boolean)
+
 export default function PizzaForm() {
+  // need to bring in the useCreateOrderMutation here
+  // make onsubmit for array of topping
+
   return (
     <form>
       <h2>Pizza Form</h2>
       {true && <div className='pending'>Order in progress...</div>}
       {true && <div className='failure'>Order failed: fullName is required</div>}
+      {/* attach these to  */}
 
       <div className="input-group">
         <div>
