@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialFormState = { // suggested
+const initialState = { // suggested
  fullName: '',
  size: '',
  '1': false,
@@ -10,18 +10,25 @@ const initialFormState = { // suggested
  '5': false,
 }
 
-export const formSlice = createSlice({
+const formSlice = createSlice({
  name: 'form',
- initialFormState,
+ initialState,
  reducers: {
-  setName(state, action) {
-   state.fullName = action.payload
+  changeInput(state, action) {
+   const {name, value} = action.payload
+   // return {...state, [name]: value}
+   state[name] = value
+  }, 
+  resetForm() {
+   return initialState
   }
+
  }
 })
 
 export const {
- setName,
+ changeInput,
+ resetForm,
 } = formSlice.actions
 
 export default formSlice.reducer

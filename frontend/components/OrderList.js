@@ -4,21 +4,20 @@ import { useGetOrdersQuery } from '../state/reallyPizzaApi'
 import { updateDisplaySize } from '../state/pizzaSlice'
 
 export default function OrderList() {
-  // const {data: orders, isLoading: gettingOrders } = useGetOrdersQuery()
   const orders = useGetOrdersQuery().data || []
   const sizeFilter = useSelector(st => st.pizzaState.size)
-  console.log("state of filter", sizeFilter)
+  console.log(orders, "list of orders all")
   const dispatch = useDispatch()
   return (
     <div id="orderList">
       <h2>Pizza Orders</h2>
       <ol>
-        {
-          orders?.filter((order) => sizeFilter === order.size || sizeFilter === 'All').map((order) => {
+        {orders &&
+          orders.filter((order) => sizeFilter === order.size || sizeFilter === 'All').map((order) => {
             return (
               <li key={order.id}>
                 <div>
-                  {order.customer} ordered a size {order.size} with {order.toppings.length || 'no'} topping{order.toppings.length === 1 ? '' : 's'}
+                  {order.customer} ordered a size {order.size} with {order.toppings?.length || 'no'} topping{order.toppings && order.toppings.length === 1 ? '' : 's'}
                 </div>
               </li>
             )
