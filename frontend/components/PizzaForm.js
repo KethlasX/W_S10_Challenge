@@ -1,22 +1,18 @@
 import React from 'react'
-// import {  }
-
-const initialFormState = { // suggested
-  fullName: '',
-  size: '',
-  '1': false,
-  '2': false,
-  '3': false,
-  '4': false,
-  '5': false,
-}
+import { useDispatch, useSelector } from 'react-redux'
+import { useCreateOrderMutation } from '../state/reallyPizzaApi'
+import {
+  setName,
+} from '../state/formSlice'
 
 // reducer to handle the changes to initialState
-// switch case for fullName, size, and topping (boolean)
 
 export default function PizzaForm() {
+  // create a form slice, put in reducer, plug into store, bring allat in here
+
   // need to bring in the useCreateOrderMutation here
   // make onsubmit for array of topping
+  const dispatch = useDispatch()
 
   return (
     <form>
@@ -34,6 +30,7 @@ export default function PizzaForm() {
             name="fullName"
             placeholder="Type full name"
             type="text"
+            onChange={(evt) => dispatch(setName(evt.target.value))}
           />
         </div>
       </div>

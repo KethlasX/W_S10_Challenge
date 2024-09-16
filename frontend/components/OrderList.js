@@ -7,19 +7,18 @@ export default function OrderList() {
   // const {data: orders, isLoading: gettingOrders } = useGetOrdersQuery()
   const orders = useGetOrdersQuery().data || []
   const sizeFilter = useSelector(st => st.pizzaState.size)
+  console.log("state of filter", sizeFilter)
   const dispatch = useDispatch()
-  console.log('orders', orders)
   return (
     <div id="orderList">
       <h2>Pizza Orders</h2>
       <ol>
         {
-          orders?.map(() => {
+          orders?.filter((order) => sizeFilter === order.size || sizeFilter === 'All').map((order) => {
             return (
-              <li key={orders.id}>
+              <li key={order.id}>
                 <div>
-                  order details here
-                  {/* need to display orders */}
+                  {order.customer} ordered a size {order.size} with {order.toppings.length || 'no'} topping{order.toppings.length === 1 ? '' : 's'}
                 </div>
               </li>
             )
