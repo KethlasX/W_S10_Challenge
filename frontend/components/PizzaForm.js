@@ -30,11 +30,12 @@ const reducer = (state, action) => {
   }
 }
 
+
 export default function PizzaForm() {
   const [createOrder, {isLoading, error}] = useCreateOrderMutation()
-  // const [form, dispatch] = useReducer(reducer, initialState)
   const dispatch = useDispatch()
   const form = useSelector(st => st.formState)
+
   const handleChange = (evt) => {
     let {name, value, type, checked} = evt.target
     let valueToUse = type === 'checkbox' ? checked : value
@@ -54,13 +55,17 @@ export default function PizzaForm() {
       dispatch(changeInput({name: "", value: ""}))
       console.log('here??')
     })
+    .then(() => {
+      dispatch(resetForm())
+    })
     .catch(() => {})
+
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Pizza Form</h2>
-      {isLoading && <div className='pending'>Order in progress...</div>}
+      {isLoading && <div className='pending'>Order in progress</div>}
       {error && <div className='failure'>Order failed: {error.data.message}</div>}
       {/* attach these to  */}
 
@@ -73,6 +78,7 @@ export default function PizzaForm() {
             name="fullName"
             placeholder="Type full name"
             type="text"
+            value={form.fullName}
             onChange={handleChange}
           />
         </div>
@@ -85,6 +91,7 @@ export default function PizzaForm() {
             data-testid="sizeSelect"
             id="size"
             name="size"
+            value={form.size}
             onChange={handleChange}>
             <option value="">----Choose size----</option>
             <option value="S">Small</option>
@@ -96,19 +103,19 @@ export default function PizzaForm() {
 
       <div className="input-group">
         <label>
-          <input data-testid="checkPepperoni" onChange={handleChange} name="1" type="checkbox" />
+          <input data-testid="checkPepperoni" checked={form['1']} onChange={handleChange} name="1" type="checkbox" />
           Pepperoni<br /></label>
         <label>
-          <input data-testid="checkGreenpeppers" onChange={handleChange} name="2" type="checkbox" />
+          <input data-testid="checkGreenpeppers" checked={form['2']} onChange={handleChange} name="2" type="checkbox" />
           Green Peppers<br /></label>
         <label>
-          <input data-testid="checkPineapple" onChange={handleChange} name="3" type="checkbox" />
+          <input data-testid="checkPineapple" checked={form['3']} onChange={handleChange} name="3" type="checkbox" />
           Pineapple<br /></label>
         <label>
-          <input data-testid="checkMushrooms" onChange={handleChange} name="4" type="checkbox" />
+          <input data-testid="checkMushrooms" checked={form['4']} onChange={handleChange} name="4" type="checkbox" />
           Mushrooms<br /></label>
         <label>
-          <input data-testid="checkHam" name="5" onChange={handleChange} type="checkbox" />
+          <input data-testid="checkHam" name="5" checked={form['5']} onChange={handleChange} type="checkbox" />
           Ham<br /></label>
       </div>
       <input data-testid="submit" type="submit" />
